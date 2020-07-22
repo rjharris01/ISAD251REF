@@ -34,3 +34,5 @@ C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\n
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.pdb
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.genruntimeconfig.cache
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.csproj.CopyComplete
+C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.csprojAssemblyReference.cache
+C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\bin\Debug\netcoreapp3.1\wwwroot\img\logo.png
