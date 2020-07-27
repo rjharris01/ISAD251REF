@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\img\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

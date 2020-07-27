@@ -11,8 +11,6 @@ C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\bin\Debug\n
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\bin\Debug\netcoreapp3.1\ISAD251REF.Views.pdb
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.AssemblyInfoInputs.cache
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.AssemblyInfo.cs
-C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.csproj.CoreCompileInputs.cache
-C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.RazorAssemblyInfo.cache
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.RazorAssemblyInfo.cs
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.TagHelpers.input.cache
