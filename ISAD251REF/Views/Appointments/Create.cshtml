@@ -1,0 +1,50 @@
+﻿@model ISAD251REF.Models.Appointments
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+    <h4>Appointments</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label  class="control-label">Family Member</label>
+                    <select asp-for="FamilyMemberId" class="form-control" asp-items="ViewBag.FamilyMemberId"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Appointment Type</label>
+                    <select asp-for="AppointmentTypeId" class="form-control" asp-items="ViewBag.AppointmentTypeId"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Appointment Date</label>
+                    <input asp-for="AppointmentDate" class="form-control" />
+                    <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Appointment Notes</label>
+                    <input asp-for="AppointmentNotes" class="form-control" />
+                    <span asp-validation-for="AppointmentNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+ 
+
+</body>
+</html>
