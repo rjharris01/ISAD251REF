@@ -5,8 +5,22 @@
 <div class="text-center mt-5 px-5">
     <div class="column">
         <center>
-                <div class="mb-2 col-lg-2"><a class="btn btn-primary btn-lg btn-block">Parent</a></div>
-                <div class="mt-2 col-lg-2"><a class="btn btn-secondary btn-lg btn-block">Child</a></div>
+
+            <div class="mb-2 col-lg-2">
+
+                <input type="button" class="btn btn-primary btn-lg btn-block" value="Parent" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
+            
+            </div>
+
+
+
+            <div class="mt-2 col-lg-2">
+
+                <input type="button" class="btn btn-secondary btn-lg btn-block" value="Child" onclick="window.location= '@Url.Action( "Index", "Child")'" />
+
+            </div>
+  
+     
         </center>
     </div>
 </div>
