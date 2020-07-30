@@ -18,14 +18,20 @@ namespace ISAD251REF.Controllers
             _context = context;
         }
 
-        // GET: AddAppointments
+        // GET: Appointments
         public async Task<IActionResult> Index()
         {
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember);
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
-        // GET: AddAppointments/Details/5
+        public async Task<IActionResult> PastAppointments()
+        {
+            var iSAD251_RHarrisContext = _context.Appointments.Where(a => a.AppointmentDate < DateTime.Now);
+            return View(await iSAD251_RHarrisContext.ToListAsync());
+        }
+
+        // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,7 +51,7 @@ namespace ISAD251REF.Controllers
             return View(appointments);
         }
 
-        // GET: AddAppointments/Create
+        // GET: Appointments/Create
         public IActionResult Create()
         {
             ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName");
@@ -53,7 +59,7 @@ namespace ISAD251REF.Controllers
             return View();
         }
 
-        // POST: AddAppointments/Create
+        // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -71,7 +77,7 @@ namespace ISAD251REF.Controllers
             return View(appointments);
         }
 
-        // GET: AddAppointments/Edit/5
+        // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,7 +95,7 @@ namespace ISAD251REF.Controllers
             return View(appointments);
         }
 
-        // POST: AddAppointments/Edit/5
+        // POST: Appointments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -126,7 +132,7 @@ namespace ISAD251REF.Controllers
             return View(appointments);
         }
 
-        // GET: AddAppointments/Delete/5
+        // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -146,7 +152,7 @@ namespace ISAD251REF.Controllers
             return View(appointments);
         }
 
-        // POST: AddAppointments/Delete/5
+        // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -176,3 +176,4 @@ C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\n
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Appointments\Details.cshtml.g.cs
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Appointments\Edit.cshtml.g.cs
 C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Appointments\Index.cshtml.g.cs
+C:\Users\richa_bfe6tpy\source\repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Appointments\PastAppointments.cshtml.g.cs
