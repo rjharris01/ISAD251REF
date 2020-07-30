@@ -1,0 +1,165 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ISAD251REF.Models;
+
+namespace ISAD251REF.Controllers
+{
+    public class AppointmentsController : Controller
+    {
+        private readonly ISAD251_RHarrisContext _context;
+
+        public AppointmentsController(ISAD251_RHarrisContext context)
+        {
+            _context = context;
+        }
+
+        // GET: AddAppointments
+        public async Task<IActionResult> Index()
+        {
+            var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember);
+            return View(await iSAD251_RHarrisContext.ToListAsync());
+        }
+
+        // GET: AddAppointments/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointments = await _context.Appointments
+                .Include(a => a.AppointmentType)
+                .Include(a => a.FamilyMember)
+                .FirstOrDefaultAsync(m => m.AppointmentId == id);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+
+            return View(appointments);
+        }
+
+        // GET: AddAppointments/Create
+        public IActionResult Create()
+        {
+            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName");
+            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName");
+            return View();
+        }
+
+        // POST: AddAppointments/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("AppointmentId,FamilyMemberId,AppointmentTypeId,AppointmentDate,AppointmentNotes")] Appointments appointments)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(appointments);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index","Parent");
+            }
+            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);
+            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointments.FamilyMemberId);
+            return View(appointments);
+        }
+
+        // GET: AddAppointments/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointments = await _context.Appointments.FindAsync(id);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);
+            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointments.FamilyMemberId);
+            return View(appointments);
+        }
+
+        // POST: AddAppointments/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,FamilyMemberId,AppointmentTypeId,AppointmentDate,AppointmentNotes")] Appointments appointments)
+        {
+            if (id != appointments.AppointmentId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(appointments);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppointmentsExists(appointments.AppointmentId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);
+            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointments.FamilyMemberId);
+            return View(appointments);
+        }
+
+        // GET: AddAppointments/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var appointments = await _context.Appointments
+                .Include(a => a.AppointmentType)
+                .Include(a => a.FamilyMember)
+                .FirstOrDefaultAsync(m => m.AppointmentId == id);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+
+            return View(appointments);
+        }
+
+        // POST: AddAppointments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var appointments = await _context.Appointments.FindAsync(id);
+            _context.Appointments.Remove(appointments);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool AppointmentsExists(int id)
+        {
+            return _context.Appointments.Any(e => e.AppointmentId == id);
+        }
+    }
+}

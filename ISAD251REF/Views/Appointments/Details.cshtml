@@ -1,0 +1,51 @@
+﻿@model ISAD251REF.Models.Appointments
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+    <div>
+        <h4>Appointments</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AppointmentDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AppointmentDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AppointmentNotes)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AppointmentNotes)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AppointmentType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AppointmentType.AppointmentTypeName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FamilyMember)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FamilyMember.FamilyMemberName)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</body>
+</html>
