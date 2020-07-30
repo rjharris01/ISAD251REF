@@ -1,6 +1,57 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        function startTime() {
+            var today = new Date();
+
+            
+            var alldays = new Array();
+            alldays[0] = "Monday";
+            alldays[1] = "Tuesday";
+            alldays[2] = "Wednesday";
+            alldays[3] = "Thurdsday";
+            alldays[4] = "Friday";
+            alldays[5] = "Saturday";
+            alldays[6] = "Sunday";
+            var day = alldays[today.getDay()];
+
+            var dayNum = today.getDay();
+
+            
+            var allmonths = new Array();
+            allmonths[0] = "January";
+            allmonths[1] = "February";
+            allmonths[2] = "March";
+            allmonths[3] = "April";
+            allmonths[4] = "May";
+            allmonths[5] = "June";
+            allmonths[6] = "July";
+            allmonths[7] = "August";
+            allmonths[8] = "September";
+            allmonths[9] = "October";
+            allmonths[10] = "November";
+            allmonths[11] = "December";
+
+            var month = allmonths[today.getMonth()];
+
+            var year = today.getFullYear();
+
+
+            var hour = today.getHours();
+            var minute = today.getMinutes();
+            var second = today.getSeconds();
+            minute = checkTime(minute);
+            second = checkTime(second);
+            document.getElementById("clock").innerHTML = "The Date and time is : " + day + " " + dayNum + " " + month + " " + year +  " At : " + hour + ":" + minute + ":" + second;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };
+            return i;
+        }
+    </script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ISAD251REF</title>
@@ -11,18 +62,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body>
+<body onload="startTime()">
     <header>
         <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                
-                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Index">
-                <img src="~/img/logo.png" height="50" width="50" />
-                Deadline and Appointment Organiser</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <a class="col-lg-3 text-center" style=" color : white " id="clock"></a>
+                <a class="navbar-brand text-nowrap text-center col-lg-6" asp-area="" asp-controller="Home" asp-action="Index">
+
+                    <img src="~/img/logo.png" height="50" width="50" />
+                    Deadline and Appointment Organiser
+                </a>
+                <a class="col-lg-3"></a>
             </div>
         </nav>
     </header>
