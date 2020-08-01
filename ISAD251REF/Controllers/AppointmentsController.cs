@@ -191,10 +191,23 @@ namespace ISAD251REF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string returnURL = TempData["returnURL"].ToString();
             var appointments = await _context.Appointments.FindAsync(id);
             _context.Appointments.Remove(appointments);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
+
+            if (returnURL == "Past")
+            {
+                return RedirectToAction("PastAppointments", "Appointments");
+            }
+
+            else if (returnURL == "Future")
+            {
+                return RedirectToAction("FutureAppointments", "Appointments");
+            }
+
+            return RedirectToAction("Index","Parent");
         }
 
         private bool AppointmentsExists(int id)
