@@ -31,6 +31,12 @@ namespace ISAD251REF.Controllers
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
+        public async Task<IActionResult> FutureAppointments()
+        {
+            var iSAD251_RHarrisContext = _context.Appointments.Where(a => a.AppointmentDate > DateTime.Now);
+            return View(await iSAD251_RHarrisContext.ToListAsync());
+        }
+
         // GET: Appointments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
