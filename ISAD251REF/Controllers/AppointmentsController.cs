@@ -27,13 +27,13 @@ namespace ISAD251REF.Controllers
 
         public async Task<IActionResult> PastAppointments()
         {
-            var iSAD251_RHarrisContext = _context.Appointments.Where(a => a.AppointmentDate < DateTime.Now);
+            var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate < DateTime.Now);
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
         public async Task<IActionResult> FutureAppointments()
         {
-            var iSAD251_RHarrisContext = _context.Appointments.Where(a => a.AppointmentDate > DateTime.Now);
+            var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate > DateTime.Now);
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
