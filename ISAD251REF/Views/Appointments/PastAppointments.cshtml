@@ -13,6 +13,8 @@
 </head>
 <body>
 
+    <div class="p-3 mb-2 bg-secondary text-white text-center rounded">Upcoming Appointments</div>
+
     @using (Html.BeginForm())
     {
         <p>
@@ -65,6 +67,6 @@
             }
         </tbody>
     </table>
-    <input style="float: right;" type="button" class="btn btn-secondary btn" value="Return to Parent Menu" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
+    <input style="float: right;" type="button" class="btn btn-primary btn" value="Return to Parent Menu" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
 </body>
 </html>
