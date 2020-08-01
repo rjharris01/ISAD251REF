@@ -10,6 +10,11 @@ namespace ISAD251REF.Controllers
     {
         public IActionResult Index()
         {
+            if (TempData["IsValid"] != null) 
+            {
+                ViewBag.IsValid = "true";
+
+            }
             return View();
         }
     }

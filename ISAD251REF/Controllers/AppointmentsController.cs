@@ -87,6 +87,7 @@ namespace ISAD251REF.Controllers
             {
                 _context.Add(appointments);
                 await _context.SaveChangesAsync();
+                TempData["IsValid"] = true;
                 return RedirectToAction("Index","Parent");
             }
             ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);

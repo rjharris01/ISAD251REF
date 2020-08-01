@@ -2,22 +2,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="container">
-        <div class="p-3 mb-2 bg-secondary text-white text-center rounded">PARENT MENU</div>
-        <div class="form-row">
-            <div class="col">
-                <input type="button" class="btn btn-lg btn-primary btn-block" value="Add Appointment" onclick="window.location= '@Url.Action( "Create", "Appointments")'" />
-            </div>
-            <div class="col">
-                <input type="button" class="btn btn-lg btn-primary btn-block" value="View / Edit Upcoming Appointment(s)" onclick="window.location= '@Url.Action( "FutureAppointments", "Appointments")'" />
-            </div>
+    <script type="text/javascript">
+        var create = '@ViewBag.IsValid';
+        if (create === "true")
+        {
+            alert("successfully added appointment")
+        }
+
+    </script>
+
+<div class="container">
+    <div class="p-3 mb-2 bg-secondary text-white text-center rounded">PARENT MENU</div>
+    <div class="form-row">
+        <div class="col">
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="Add Appointment" onclick="window.location= '@Url.Action( "Create", "Appointments")'" />
         </div>
-        <div class="form-row mt-2">
-            <div class="col">
-                <input type="button" class="btn btn-lg btn-primary btn-block" value="View / Edit Past Appointment(s)" onclick="window.location= '@Url.Action( "PastAppointments", "Appointments")'" />
-            </div>
-            <div class="col">
-                <input type="button" class="btn btn-lg btn-primary btn-block" value="Change User" onclick="window.location= '@Url.Action( "view", "controller")'" />
-            </div>
+        <div class="col">
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="View / Edit Upcoming Appointment(s)" onclick="window.location= '@Url.Action( "FutureAppointments", "Appointments")'" />
         </div>
     </div>
+    <div class="form-row mt-2">
+        <div class="col">
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="View / Edit Past Appointment(s)" onclick="window.location= '@Url.Action( "PastAppointments", "Appointments")'" />
+        </div>
+        <div class="col">
+            <input type="button" class="btn btn-lg btn-primary btn-block" value="Change User" onclick="window.location= '@Url.Action( "view", "controller")'" />
+        </div>
+    </div>
+</div>
+
