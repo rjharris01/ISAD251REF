@@ -6,17 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ISAD251REF.Models;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Headers;
 
 namespace ISAD251REF.Controllers
 {
     public class AppointmentsController : Controller
-    {
+    {    
+        
+            
         private readonly ISAD251_RHarrisContext _context;
 
         public AppointmentsController(ISAD251_RHarrisContext context)
         {
             _context = context;
         }
+
+
 
         // GET: Appointments
         public async Task<IActionResult> Index()
@@ -28,12 +35,14 @@ namespace ISAD251REF.Controllers
         public async Task<IActionResult> PastAppointments()
         {
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate < DateTime.Now);
+            TempData["returnURL"] = "Past";
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
         public async Task<IActionResult> FutureAppointments()
         {
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate > DateTime.Now);
+            TempData["returnURL"] = "Future";
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
@@ -60,6 +69,8 @@ namespace ISAD251REF.Controllers
         // GET: Appointments/Create
         public IActionResult Create()
         {
+            
+
             ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName");
             ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName");
             return View();
@@ -86,6 +97,9 @@ namespace ISAD251REF.Controllers
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            
+
+
             if (id == null)
             {
                 return NotFound();
@@ -106,8 +120,12 @@ namespace ISAD251REF.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AppointmentId,FamilyMemberId,AppointmentTypeId,AppointmentDate,AppointmentNotes")] Appointments appointments)
+        public async Task<IActionResult> Edit(int id,[Bind("AppointmentId,FamilyMemberId,AppointmentTypeId,AppointmentDate,AppointmentNotes")] Appointments appointments)
         {
+
+            string returnURL = TempData["returnURL"].ToString();
+
+
             if (id != appointments.AppointmentId)
             {
                 return NotFound();
@@ -131,7 +149,17 @@ namespace ISAD251REF.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                if (returnURL == "Past")
+                {
+                    return RedirectToAction("PastAppointments", "Appointments");
+                }
+
+                else if (returnURL == "Future")
+                {
+                    return RedirectToAction("FutureAppointments", "Appointments");
+                }
+                
             }
             ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);
             ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointments.FamilyMemberId);
