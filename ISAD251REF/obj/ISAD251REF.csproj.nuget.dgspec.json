@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\richa_bfe6tpy\\source\\repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj": {}
+    "C:\\Users\\richa\\Source\\Repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\richa_bfe6tpy\\source\\repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj": {
+    "C:\\Users\\richa\\Source\\Repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\richa_bfe6tpy\\source\\repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj",
+        "projectUniqueName": "C:\\Users\\richa\\Source\\Repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj",
         "projectName": "ISAD251REF",
-        "projectPath": "C:\\Users\\richa_bfe6tpy\\source\\repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj",
-        "packagesPath": "C:\\Users\\richa_bfe6tpy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\richa_bfe6tpy\\source\\repos\\rjharris01\\ISAD251REF\\ISAD251REF\\obj\\",
+        "projectPath": "C:\\Users\\richa\\Source\\Repos\\rjharris01\\ISAD251REF\\ISAD251REF\\ISAD251REF.csproj",
+        "packagesPath": "C:\\Users\\richa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\richa\\Source\\Repos\\rjharris01\\ISAD251REF\\ISAD251REF\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\richa_bfe6tpy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\richa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
