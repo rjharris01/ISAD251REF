@@ -32,17 +32,54 @@ namespace ISAD251REF.Controllers
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
-        public async Task<IActionResult> PastAppointments()
+        public async Task<IActionResult> PastAppointments(string sortOrder)
         {
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate < DateTime.Now);
             TempData["returnURL"] = "Past";
+
+            switch (sortOrder)
+            {
+                case "date":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.AppointmentDate);
+                    break;
+
+                case "date_desc":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderByDescending(a => a.AppointmentDate);
+                    break;
+
+                default:
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.AppointmentDate);
+                    break;
+
+            }
+
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
-        public async Task<IActionResult> FutureAppointments()
+        public async Task<IActionResult> FutureAppointments(string sortOrder)
         {
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate > DateTime.Now);
             TempData["returnURL"] = "Future";
+
+            switch (sortOrder)
+            {
+                case "date":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.AppointmentDate);
+                    break;
+
+                case "date_desc":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderByDescending(a => a.AppointmentDate);
+                    break;
+
+                default:
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.AppointmentDate);
+                    break;
+
+            }
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 

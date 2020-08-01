@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.AppointmentDate)
+                    @Html.ActionLink("Appointment Date", "PastAppointments", new { sortOrder = ViewBag.DateSortParm })
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FamilyMember)
