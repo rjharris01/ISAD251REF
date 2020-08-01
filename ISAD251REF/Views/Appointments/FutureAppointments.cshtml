@@ -12,6 +12,16 @@
     <title>Future Appointments</title>
 </head>
 <body>
+
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by Family Member: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
     <table class="table">
         <thead>
             <tr>

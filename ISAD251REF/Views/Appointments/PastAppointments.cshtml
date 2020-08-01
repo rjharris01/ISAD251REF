@@ -12,6 +12,16 @@
     <title>Past Appointments</title>
 </head>
 <body>
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by Family Member: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+
     <table class="table">
         <thead>
             <tr>
@@ -55,6 +65,6 @@
             }
         </tbody>
     </table>
-    <input style ="float: right;" type="button" class="btn btn-secondary btn" value="Return to Parent Menu" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
+    <input style="float: right;" type="button" class="btn btn-secondary btn" value="Return to Parent Menu" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
 </body>
 </html>

@@ -32,12 +32,17 @@ namespace ISAD251REF.Controllers
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
-        public async Task<IActionResult> PastAppointments(string sortOrder)
+        public async Task<IActionResult> PastAppointments(string sortOrder, string searchString)
         {
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate < DateTime.Now);
             TempData["returnURL"] = "Past";
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                iSAD251_RHarrisContext = iSAD251_RHarrisContext.Where(a => a.FamilyMember.FamilyMemberName.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
@@ -58,12 +63,17 @@ namespace ISAD251REF.Controllers
             return View(await iSAD251_RHarrisContext.ToListAsync());
         }
 
-        public async Task<IActionResult> FutureAppointments(string sortOrder)
+        public async Task<IActionResult> FutureAppointments(string sortOrder, string searchString)
         {
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
             var iSAD251_RHarrisContext = _context.Appointments.Include(a => a.AppointmentType).Include(a => a.FamilyMember).Where(a => a.AppointmentDate > DateTime.Now);
             TempData["returnURL"] = "Future";
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                iSAD251_RHarrisContext = iSAD251_RHarrisContext.Where(a => a.FamilyMember.FamilyMemberName.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
