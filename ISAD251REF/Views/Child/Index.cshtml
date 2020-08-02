@@ -3,11 +3,11 @@
 }
 
 
-    <script>
-        var create = '@(ViewBag.IsValid)';
-        if (create == "true")
+    <script type="text/javascript">
+        var create = '@ViewBag.IsValid';
+        if (create === "true")
         {
-            $('#myModal').modal('show');
+            alert("successfully added Deadline")
         }
 
     </script>
@@ -16,32 +16,18 @@
         <div class="p-3 mb-2 bg-primary text-white text-center rounded">CHILD MENU</div>
         <div class="form-row">
             <div class="col">
-                <input type="button" class="btn btn-lg btn-secondary btn-block" value="Add deadline" onclick="window.location= '@Url.Action( "Index", "NewDeadline")'" />
+                <input type="button" class="btn btn-lg btn-secondary btn-block" value="Add deadline" onclick="window.location= '@Url.Action( "Create", "Deadlines")'" />
             </div>
             <div class="col">
-                <input type="button" class="btn btn-lg btn-secondary btn-block" value="View / Edit Upcoming Deadline(s)" onclick="window.location= '@Url.Action( "view", "controller")'" />
+                <input type="button" class="btn btn-lg btn-secondary btn-block" value="View / Edit Upcoming Deadline(s)" onclick="window.location= '@Url.Action( "FutureDeadlines", "Deadlines")'" />
             </div>
         </div>
         <div class="form-row mt-2">
             <div class="col">
-                <input type="button" class="btn btn-lg btn-secondary btn-block" value="View / Edit Past Deadline(s)" onclick="window.location= '@Url.Action( "view", "controller")'" />
+                <input type="button" class="btn btn-lg btn-secondary btn-block" value="View / Edit Past Deadline(s)" onclick="window.location= '@Url.Action( "PastDeadlines", "Deadlines")'" />
             </div>
             <div class="col">
-                <input type="button" class="btn btn-lg btn-secondary btn-block" value="Change User" onclick="window.location= '@Url.Action( "view", "controller")'" />
+                <input type="button" class="btn btn-lg btn-secondary btn-block" value="Change User" onclick="window.location= '@Url.Action( "Index", "Home")'" />
             </div>
-        </div>
-    </div>
-
-    <div class="modal hide fade" id="myModal">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h3>Modal header</h3>
-        </div>
-        <div class="modal-body">
-            <p>One fine body…</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
         </div>
     </div>
