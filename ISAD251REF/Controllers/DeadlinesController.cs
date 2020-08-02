@@ -55,7 +55,7 @@ namespace ISAD251REF.Controllers
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
             var iSAD251_RHarrisContext = _context.Deadlines.Include(d => d.DeadlineType).Include(d => d.Subject).Where(a => a.DeadlineDate > DateTime.Now);
-            TempData["returnURL"] = "Past";
+            TempData["returnURL"] = "Future";
 
             if (!String.IsNullOrEmpty(searchString))
             {

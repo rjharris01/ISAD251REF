@@ -45,7 +45,20 @@
     </div>
     <div>
         <a asp-action="Edit" asp-route-id="@Model.AppointmentId">Edit</a> |
-        <a href='javascript:history.go(-1)'>Back to List</a>
+        <script>
+            var returnurl = document.referrer;
+            if (returnurl != null)
+            {
+                document.write('<a href=\'' + document.referrer + '\';">Back to List</a>');
+
+            }
+
+            else {
+                document.write('<a href="/Home/Index" class = "elements">Back to List</a>');
+            }
+
+
+        </script>
     </div>
 </body>
 </html>
