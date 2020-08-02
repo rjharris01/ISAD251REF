@@ -18,6 +18,69 @@ namespace ISAD251REF.Controllers
             _context = context;
         }
 
+
+        public async Task<IActionResult> PastDeadlines(string sortOrder, string searchString)
+        {
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            var iSAD251_RHarrisContext = _context.Deadlines.Include(d => d.DeadlineType).Include(d => d.Subject).Where(a => a.DeadlineDate < DateTime.Now);
+            TempData["returnURL"] = "Past";
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                iSAD251_RHarrisContext = iSAD251_RHarrisContext.Where(a => a.Subject.SubjectName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.DeadlineDate);
+                    break;
+
+                case "date_desc":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderByDescending(a => a.DeadlineDate);
+                    break;
+
+                default:
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.DeadlineDate);
+                    break;
+
+            }
+
+            return View(await iSAD251_RHarrisContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> FutureDeadlines(string sortOrder, string searchString)
+        {
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            var iSAD251_RHarrisContext = _context.Deadlines.Include(d => d.DeadlineType).Include(d => d.Subject).Where(a => a.DeadlineDate > DateTime.Now);
+            TempData["returnURL"] = "Past";
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                iSAD251_RHarrisContext = iSAD251_RHarrisContext.Where(a => a.Subject.SubjectName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "date":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.DeadlineDate);
+                    break;
+
+                case "date_desc":
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderByDescending(a => a.DeadlineDate);
+                    break;
+
+                default:
+                    iSAD251_RHarrisContext = iSAD251_RHarrisContext.OrderBy(a => a.DeadlineDate);
+                    break;
+
+            }
+
+            return View(await iSAD251_RHarrisContext.ToListAsync());
+        }
+
         // GET: Deadlines
         public async Task<IActionResult> Index()
         {
@@ -64,7 +127,7 @@ namespace ISAD251REF.Controllers
             {
                 _context.Add(deadlines);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Child");
             }
             ViewData["DeadlineTypeId"] = new SelectList(_context.DeadlineTypes, "DeadlineTypeId", "DeadlineTypeName", deadlines.DeadlineTypeId);
             ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectName", deadlines.SubjectId);
@@ -96,6 +159,9 @@ namespace ISAD251REF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DeadlineId,SubjectId,DeadlineTypeId,DeadlineDate,DeadlineNotes")] Deadlines deadlines)
         {
+
+            string returnURL = TempData["returnURL"].ToString();
+
             if (id != deadlines.DeadlineId)
             {
                 return NotFound();
@@ -119,7 +185,16 @@ namespace ISAD251REF.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                if (returnURL == "Past")
+                {
+                    return RedirectToAction("PastDeadlines", "Deadlines");
+                }
+
+                else if (returnURL == "Future")
+                {
+                    return RedirectToAction("FutureDeadlines", "Deadlines");
+                }
             }
             ViewData["DeadlineTypeId"] = new SelectList(_context.DeadlineTypes, "DeadlineTypeId", "DeadlineTypeName", deadlines.DeadlineTypeId);
             ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectName", deadlines.SubjectId);
@@ -151,10 +226,23 @@ namespace ISAD251REF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string returnURL = TempData["returnURL"].ToString();
+
             var deadlines = await _context.Deadlines.FindAsync(id);
             _context.Deadlines.Remove(deadlines);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            if (returnURL == "Past")
+            {
+                return RedirectToAction("PastDeadlines", "Deadlines");
+            }
+
+            else if (returnURL == "Future")
+            {
+                return RedirectToAction("FutureDeadlines", "Deadlines");
+            }
+
+            return RedirectToAction("Index", "Child");
         }
 
         private bool DeadlinesExists(int id)
