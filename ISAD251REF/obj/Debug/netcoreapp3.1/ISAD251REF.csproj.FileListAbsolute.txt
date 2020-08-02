@@ -357,3 +357,10 @@ C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreap
 C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\staticwebassets\ISAD251REF.StaticWebAssets.xml
 C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\ISAD251REF.genruntimeconfig.cache
 C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Appointments\FutureAppointments.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\Create.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\Delete.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\Details.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\Edit.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\FutureDeadlines.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\Index.cshtml.g.cs
+C:\Users\richa\Source\Repos\rjharris01\ISAD251REF\ISAD251REF\obj\Debug\netcoreapp3.1\Razor\Views\Deadlines\PastDeadlines.cshtml.g.cs
