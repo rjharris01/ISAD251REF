@@ -23,49 +23,49 @@
         </p>
     }
 
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Appointment Date", "FutureAppointments", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            <th>
+                Family Member
+            </th>
+            <th>
+                Appointment Type
+            </th>
+            <th>
+                Appointment Notes
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.ActionLink("Appointment Date", "FutureAppointments", new { sortOrder = ViewBag.DateSortParm })
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FamilyMember)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AppointmentType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AppointmentNotes)
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FamilyMember.FamilyMemberName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentType.AppointmentTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentNotes)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AppointmentDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FamilyMember.FamilyMemberName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AppointmentType.AppointmentTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AppointmentNotes)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
     <input style="float: right;" type="button" class="btn btn-primary btn" value="Return to Parent Menu" onclick="window.location= '@Url.Action( "Index", "Parent")'" />
 </body>
 </html>
