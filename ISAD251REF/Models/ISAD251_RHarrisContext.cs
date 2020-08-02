@@ -43,6 +43,18 @@ namespace ISAD251REF.Models
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<FamilyMembers>(entity =>
+            {
+                entity.HasKey(e => e.FamilyMemberId)
+                    .HasName("PK__FamilyMe__B7AD6DF39A1EE904");
+
+                entity.Property(e => e.FamilyMemberId).HasColumnName("FamilyMemberID");
+
+                entity.Property(e => e.FamilyMemberName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Appointments>(entity =>
             {
                 entity.HasKey(e => e.AppointmentId)
@@ -119,17 +131,7 @@ namespace ISAD251REF.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<FamilyMembers>(entity =>
-            {
-                entity.HasKey(e => e.FamilyMemberId)
-                    .HasName("PK__FamilyMe__B7AD6DF39A1EE904");
-
-                entity.Property(e => e.FamilyMemberId).HasColumnName("FamilyMemberID");
-
-                entity.Property(e => e.FamilyMemberName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
+            
 
             OnModelCreatingPartial(modelBuilder);
         }
