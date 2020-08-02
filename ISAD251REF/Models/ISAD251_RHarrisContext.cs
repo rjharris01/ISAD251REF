@@ -15,6 +15,10 @@ namespace ISAD251REF.Models
         {
         }
 
+        public virtual DbSet<DeadlineTypes> DeadlineTypes { get; set; }
+        public virtual DbSet<Deadlines> Deadlines { get; set; }
+        public virtual DbSet<Subjects> Subjects { get; set; }
+
         public virtual DbSet<AppointmentTypes> AppointmentTypes { get; set; }
         public virtual DbSet<Appointments> Appointments { get; set; }
         public virtual DbSet<FamilyMembers> FamilyMembers { get; set; }
@@ -63,6 +67,56 @@ namespace ISAD251REF.Models
                     .WithMany(p => p.Appointments)
                     .HasForeignKey(d => d.FamilyMemberId)
                     .HasConstraintName("FK__Appointme__Famil__06CD04F7");
+            });
+
+            modelBuilder.Entity<DeadlineTypes>(entity =>
+            {
+                entity.HasKey(e => e.DeadlineTypeId)
+                    .HasName("PK__Deadline__67C197FA2F7F3371");
+
+                entity.Property(e => e.DeadlineTypeId).HasColumnName("DeadlineTypeID");
+
+                entity.Property(e => e.DeadlineTypeName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Deadlines>(entity =>
+            {
+                entity.HasKey(e => e.DeadlineId)
+                    .HasName("PK__Deadline__CAF057F7C942E6D7");
+
+                entity.Property(e => e.DeadlineId).HasColumnName("DeadlineID");
+
+                entity.Property(e => e.DeadlineDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DeadlineNotes).HasMaxLength(501);
+
+                entity.Property(e => e.DeadlineTypeId).HasColumnName("DeadlineTypeID");
+
+                entity.Property(e => e.SubjectId).HasColumnName("SubjectID");
+
+                entity.HasOne(d => d.DeadlineType)
+                    .WithMany(p => p.Deadlines)
+                    .HasForeignKey(d => d.DeadlineTypeId)
+                    .HasConstraintName("FK__Deadlines__Deadl__19DFD96B");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.Deadlines)
+                    .HasForeignKey(d => d.SubjectId)
+                    .HasConstraintName("FK__Deadlines__Subje__1AD3FDA4");
+            });
+
+            modelBuilder.Entity<Subjects>(entity =>
+            {
+                entity.HasKey(e => e.SubjectId)
+                    .HasName("PK__Subjects__AC1BA388E93839B9");
+
+                entity.Property(e => e.SubjectId).HasColumnName("SubjectID");
+
+                entity.Property(e => e.SubjectName)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<FamilyMembers>(entity =>
