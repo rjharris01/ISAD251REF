@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//stores the Deadlines model class
 namespace ISAD251REF.Models
 {
     public partial class DeadlineTypes

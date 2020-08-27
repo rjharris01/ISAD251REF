@@ -128,18 +128,24 @@ namespace ISAD251REF.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AppointmentId,FamilyMemberId,AppointmentTypeId,AppointmentDate,AppointmentNotes")] Appointments appointments)
+        public async Task<IActionResult> Create([Bind("FamilyMemberID,AppointmentTypeID,AppointmentDate,AppointmentNotes")] New_Appointment appointment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(appointments);
+                _context.Database.ExecuteSqlRaw("EXEC New_Appointment @FamilyMemberID, @AppointmentTypeID, @AppointmentDate, @AppointmentNotes",
+                new Microsoft.Data.SqlClient.SqlParameter("@FamilyMemberID", Int32.Parse(appointment.FamilyMemberID.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@AppointmentTypeID", Int32.Parse(appointment.AppointmentTypeID.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@AppointmentDate", DateTime.Parse(appointment.AppointmentDate.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@AppointmentNotes", appointment.AppointmentNotes.ToString()));
+                
+
                 await _context.SaveChangesAsync();
                 TempData["IsValid"] = true;
                 return RedirectToAction("Index","Parent");
             }
-            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointments.AppointmentTypeId);
-            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointments.FamilyMemberId);
-            return View(appointments);
+            ViewData["AppointmentTypeId"] = new SelectList(_context.AppointmentTypes, "AppointmentTypesId", "AppointmentTypeName", appointment.AppointmentTypeID);
+            ViewData["FamilyMemberId"] = new SelectList(_context.FamilyMembers, "FamilyMemberId", "FamilyMemberName", appointment.FamilyMemberID);
+            return View(appointment);
         }
 
         // GET: Appointments/Edit/5
@@ -183,7 +189,13 @@ namespace ISAD251REF.Controllers
             {
                 try
                 {
-                    _context.Update(appointments);
+                    _context.Database.ExecuteSqlRaw("EXEC Edit_Appointment @AppointmentID,@FamilyMemberID, @AppointmentTypeID, @AppointmentDate, @AppointmentNotes",
+                    new Microsoft.Data.SqlClient.SqlParameter("@AppointmentID", Int32.Parse(appointments.AppointmentId.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@FamilyMemberID", Int32.Parse(appointments.FamilyMemberId.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@AppointmentTypeID", Int32.Parse(appointments.AppointmentTypeId.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@AppointmentDate", DateTime.Parse(appointments.AppointmentDate.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@AppointmentNotes", appointments.AppointmentNotes.ToString()));
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -239,9 +251,15 @@ namespace ISAD251REF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             string returnURL = TempData["returnURL"].ToString();
             var appointments = await _context.Appointments.FindAsync(id);
-            _context.Appointments.Remove(appointments);
+
+
+            _context.Database.ExecuteSqlRaw("EXEC Delete_Appointment @DeleteID",
+ 
+            new Microsoft.Data.SqlClient.SqlParameter("@DeleteID", id));
+
             await _context.SaveChangesAsync();
             
 

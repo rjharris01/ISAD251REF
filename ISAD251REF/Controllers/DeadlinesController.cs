@@ -121,17 +121,21 @@ namespace ISAD251REF.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DeadlineId,SubjectId,DeadlineTypeId,DeadlineDate,DeadlineNotes")] Deadlines deadlines)
+        public async Task<IActionResult> Create([Bind("DeadlineId,SubjectID,DeadlineTypeID,DeadlineDate,DeadlineNotes")] New_Deadline New_Deadline)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(deadlines);
+                _context.Database.ExecuteSqlRaw("EXEC New_Deadline @SubjectID,@DeadlineTypeID,@DeadlineDate, @DeadlineNotes",
+                new Microsoft.Data.SqlClient.SqlParameter("@SubjectID", Int32.Parse(New_Deadline.SubjectID.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@DeadlineTypeID", Int32.Parse(New_Deadline.DeadlineTypeID.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@DeadlineDate", DateTime.Parse(New_Deadline.DeadlineDate.ToString())),
+                new Microsoft.Data.SqlClient.SqlParameter("@DeadlineNotes", New_Deadline.DeadlineNotes.ToString()));
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Child");
             }
-            ViewData["DeadlineTypeId"] = new SelectList(_context.DeadlineTypes, "DeadlineTypeId", "DeadlineTypeName", deadlines.DeadlineTypeId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectName", deadlines.SubjectId);
-            return View(deadlines);
+            ViewData["DeadlineTypeId"] = new SelectList(_context.DeadlineTypes, "DeadlineTypeId", "DeadlineTypeName", New_Deadline.DeadlineTypeID);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectName", New_Deadline.SubjectID);
+            return View(New_Deadline);
         }
 
         // GET: Deadlines/Edit/5
@@ -171,7 +175,12 @@ namespace ISAD251REF.Controllers
             {
                 try
                 {
-                    _context.Update(deadlines);
+                    _context.Database.ExecuteSqlRaw("EXEC Edit_Deadline @DeadlineID,@SubjectID, @DeadlineTypeID, @DeadlineDate, @DeadlineNotes",
+                    new Microsoft.Data.SqlClient.SqlParameter("@DeadlineID",id),
+                    new Microsoft.Data.SqlClient.SqlParameter("@SubjectID", Int32.Parse(deadlines.SubjectId.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@DeadlineTypeID", Int32.Parse(deadlines.DeadlineTypeId.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@DeadlineDate", DateTime.Parse(deadlines.DeadlineDate.ToString())),
+                    new Microsoft.Data.SqlClient.SqlParameter("@DeadlineNotes", deadlines.DeadlineNotes.ToString()));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -229,7 +238,9 @@ namespace ISAD251REF.Controllers
             string returnURL = TempData["returnURL"].ToString();
 
             var deadlines = await _context.Deadlines.FindAsync(id);
-            _context.Deadlines.Remove(deadlines);
+            _context.Database.ExecuteSqlRaw("EXEC Delete_Deadline @DeadlineID",
+
+            new Microsoft.Data.SqlClient.SqlParameter("@DeadlineID", id));
             await _context.SaveChangesAsync();
 
             if (returnURL == "Past")
