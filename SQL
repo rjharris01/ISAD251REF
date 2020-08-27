@@ -1,0 +1,181 @@
+--Create Appointment Types table
+
+CREATE TABLE AppointmentTypes
+(
+    AppointmentTypesID INT IDENTITY PRIMARY KEY,
+    AppointmentTypeName NVARCHAR(50) NOT NULL
+)
+
+--Create Family Members Table
+
+CREATE TABLE FamilyMembers
+(
+    FamilyMemberID INT IDENTITY PRIMARY KEY,
+    FamilyMemberName NVARCHAR(50) NOT NULL
+)
+
+--CreateDeadle types Table
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DeadlineTypes](
+	[DeadlineTypeID] [int] IDENTITY(1,1) NOT NULL,
+	[DeadlineTypeName] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DeadlineTypeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+--Create Subjects Table
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Subjects](
+	[SubjectID] [int] IDENTITY(1,1) NOT NULL,
+	[SubjectName] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[SubjectID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+--Create Appointments Table
+
+CREATE TABLE Appointments
+(
+    AppointmentID INT IDENTITY PRIMARY KEY,
+    FamilyMemberID INT REFERENCES FamilyMembers (FamilyMemberID),
+    AppointmentTypeID INT REFERENCES AppointmentTypes (AppointmentTypesID),
+    AppointmentDate DATETIME NOT NULL,
+    AppointmentNotes NVARCHAR(501)
+)
+
+
+--Create Deadlines Table
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Deadlines](
+	[DeadlineID] [int] IDENTITY(1,1) NOT NULL,
+	[SubjectID] [int] NULL,
+	[DeadlineTypeID] [int] NULL,
+	[DeadlineDate] [datetime] NOT NULL,
+	[DeadlineNotes] [nvarchar](501) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DeadlineID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Deadlines]  WITH CHECK ADD FOREIGN KEY([DeadlineTypeID])
+REFERENCES [dbo].[DeadlineTypes] ([DeadlineTypeID])
+GO
+ALTER TABLE [dbo].[Deadlines]  WITH CHECK ADD FOREIGN KEY([SubjectID])
+REFERENCES [dbo].[Subjects] ([SubjectID])
+GO
+
+
+
+--Appointments List View
+
+CREATE VIEW AppointmentsList
+AS
+SELECT Appointments.AppointmentID, FamilyMembers.FamilyMemberName, AppointmentTypes.AppointmentTypeName, Appointments.AppointmentDate, Appointments.AppointmentNotes
+FROM dbo.Appointments 
+INNER JOIN FamilyMembers ON Appointments.FamilyMemberID = FamilyMembers.FamilyMemberID
+INNER JOIN AppointmentTypes ON Appointments.AppointmentTypeID = AppointmentTypes.AppointmentTypesID
+
+--Delete Appointment procedure
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Delete_Appointment] (@AppointmentID as Int)
+AS
+BEGIN
+
+DELETE 
+FROM Appointments WHERE AppointmentID = @AppointmentID;
+END;
+GO
+
+--Delete Deadline procedure 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Delete_Deadline] (@DeadlineID as Int)
+AS
+BEGIN DELETE FROM Deadlines WHERE DeadlineID = @DeadlineID;
+END;
+GO
+
+--Edit deadline
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Edit_Deadline] (@DeadlineID AS int, @SubjectID AS int,@DeadlineTypeID AS int,@DeadlineDate AS DATETIME, @DeadlineNotes AS NVARCHAR(501))
+AS
+BEGIN
+
+UPDATE Deadlines
+SET  SubjectID = @SubjectID, DeadlineTypeID = @DeadlineTypeID, DeadlineDate = @DeadlineDate, DeadlineNotes = @DeadlineNotes
+WHERE DeadlineID = @DeadlineID
+
+END;
+GO
+
+--Edit Appointment
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Edit_Appointment] (@AppointmentID AS int, @FamilyMemberID AS int,@AppointmentTypeID AS int,@AppointmentDate AS DATETIME, @AppointmentNotes AS NVARCHAR(501))
+AS
+BEGIN
+
+UPDATE Appointments
+SET  FamilyMemberID = @FamilyMemberID, AppointmentTypeId = @AppointmentTypeID, AppointmentDate = @AppointmentDate, AppointmentNotes = @AppointmentNotes
+WHERE AppointmentID = @AppointmentID
+
+END;
+GO
+
+--New Deadline procedure
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[New_DeadLine] (@SubjectID AS int,@DeadlineTypeID AS int,@DeadlineDate AS DATETIME, @DeadlineNotes AS NVARCHAR(500))
+AS
+BEGIN
+
+INSERT INTO [Deadlines] ([SubjectID], [DeadlineTypeID], [DeadlineDate], [DeadlineNotes])
+values (@SubjectID,@DeadlineTypeID,@DeadlineDate, @DeadlineNotes)
+
+END;
+GO
+
+
+--New Appointment Procedure
+CREATE PROCEDURE [New_Appointment] (@FamilyMemberID AS int,@AppointmentTypeID AS int,@AppointmentDate AS DATETIME, @AppointmentNotes AS NVARCHAR)
+AS
+BEGIN
+
+INSERT INTO [Appointments] ([FamilyMemberID], [AppointmentTypeID], [AppointmentDate], [AppointmentNotes])
+values (@FamilyMemberID,@AppointmentTypeID,@AppointmentDate, @AppointmentNotes)
+
+END;
